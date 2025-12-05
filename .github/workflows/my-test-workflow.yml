@@ -1,0 +1,25 @@
+name: Deploy Workflow Test
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'stuff2/**'
+
+concurrency:
+  group: ${{ github.workflow }}-testing
+  cancel-in-progress: false
+
+jobs:
+  deploy-staging:
+    name: Deploy Test
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    run: |
+      echo "hey look we are deploying back"
+
+  rollback-staging:
+    name: Rollback Test
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && !github.event.pull_request.merged
+    run: |
+      echo "hey look we are rolling back"
