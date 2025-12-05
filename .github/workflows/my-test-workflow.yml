@@ -15,11 +15,15 @@ jobs:
   deploy-staging:
     name: Deploy Test
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
-    run: |
-      echo "hey look we are deploying back"
+    steps:
+      - name: Doing deploy
+        run: |
+          echo "hey look we are deploying back"
 
   rollback-staging:
     name: Rollback Test
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && !github.event.pull_request.merged
-    run: |
-      echo "hey look we are rolling back"
+    steps:
+      - name: Doing deploy    
+        run: |
+          echo "hey look we are rolling back"
