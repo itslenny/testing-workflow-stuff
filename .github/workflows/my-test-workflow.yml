@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, reopened, synchronize, closed]
     paths:
       - 'stuff2/**'
 
