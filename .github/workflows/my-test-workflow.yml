@@ -16,7 +16,11 @@ jobs:
   deploy-staging:
     name: Deploy Test
     runs-on: ubuntu-24.04
-    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false && github.event.action != 'closed'
+    if: >
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.state == 'open' &&
+      github.event.action != 'closed'
     steps:
       - name: Doing deploy
         run: |
@@ -25,7 +29,10 @@ jobs:
   rollback-staging:
     name: Rollback Test
     runs-on: ubuntu-24.04
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && !github.event.pull_request.merged
+    if: >
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      !github.event.pull_request.merged
     steps:
       - name: Doing deploy    
         run: |
